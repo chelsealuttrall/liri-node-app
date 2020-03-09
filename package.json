@@ -1,7 +1,20 @@
 {
-  "name": "liri-node-app",
+  "name": "liribot",
   "version": "1.0.0",
-  "main": "liribot.js",
+  "description": "",
+  "main": "keys.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "install": "^0.13.0",
+    "moment": "^2.24.0",
+    "mysql": "^2.18.1",
+    "node": "^13.10.1",
+    "node-spotify-api": "^1.1.1",
+    "nodenpm": "^0.1.6"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -9,21 +22,10 @@
     "type": "git",
     "url": "git+https://github.com/chelsealuttrall/liri-node-app.git"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/chelsealuttrall/liri-node-app/issues"
   },
-  "homepage": "https://github.com/chelsealuttrall/liri-node-app#readme",
-  "description": "",
-  "dependencies": {
-    "axios": "^0.19.2",
-    "dotenv": "^8.2.0",
-    "install": "^0.13.0",
-    "moment": "^2.24.0",
-    "node": "^13.10.1",
-    "node-spotify-api": "^1.1.1",
-    "nodenpm": "^0.1.6"
-  }
+  "homepage": "https://github.com/chelsealuttrall/liri-node-app#readme"
 }
