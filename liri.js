@@ -1,11 +1,50 @@
-js
 require("dotenv").config();
 
-js
+const axios = require('axios').default;
+
 var keys = require("./keys.js");
 
-js
+//spotify stuff
+var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
+let songQuery = '';
+var commands = process.argv.slice(2);
+console.log('commands:', commands);
+//conert this stuff
+
+
+//movie this stuff
+
+
+//do what it says stuff
+
+
+
+
+switch (commands[0]) {
+    case 'spotify-this-song':
+        console.log(commands[1]);
+        songQuery = commands[1];
+        spotify
+            .search({ type: 'track', query: songQuery, limit: 1 })
+            .then(function(response) {
+                console.log(response.tracks);
+
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+        break;
+    case 'concert-this':
+        console.log(commands[1], '');
+        break;
+    case 'movie-this':
+        console.log(commands[1], '');
+    case 'do-what-it-says':
+        console.log(commands[1], '');
+    default:
+        console.log('Sorry, I don\'t know how to do that.')
+};
 
 
 
@@ -13,28 +52,3 @@ var spotify = new Spotify(keys.spotify);
 // To retrieve the data that will power this app, you'll need to 
 //send requests using the `axios` package to the Bands in Town, Spotify and OMDB APIs. 
 //You'll find these Node packages crucial for your assignment.
-
-// * [Node-Spotify-API](https://www.npmjs.com/package/node-spotify-api)
-
-// * [Axios](https://www.npmjs.com/package/axios)
-
-//   * You'll use Axios to grab data from the [OMDB API](http://www.omdbapi.com) 
-//and the [Bands In Town API](http://www.artists.bandsintown.com/bandsintown-api)
-
-// * [Moment](https://www.npmjs.com/package/moment)
-
-// * [DotEnv](https://www.npmjs.com/package/dotenv)
-
-
-
-// ### Instructions
-
-// 9. Make it so liri.js can take in one of the following commands:
-
-//    * `concert-this`
-
-//    * `spotify-this-song`
-
-//    * `movie-this`
-
-//    * `do-what-it-says`
