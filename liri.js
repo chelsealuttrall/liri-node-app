@@ -11,8 +11,14 @@ let songQuery = '';
 var commands = process.argv.slice(2);
 console.log('commands:', commands);
 //conert this stuff
-
-
+var BandsInTownEvents = require('bandsintown-events')
+var artistName = '';
+var Events = new BandsInTownEvents();
+Events.setParams({
+    "app_id": keys.bandsInTown,
+    "artists": //accepts string for single artist or an array of artist names
+        artistName
+});
 //movie this stuff
 
 
@@ -22,7 +28,7 @@ console.log('commands:', commands);
 
 
 switch (commands[0]) {
-    case 'spotify-this-song':
+    case 'spotify-this-song': //this one isn't working quite right either.
         console.log(commands[1]);
         songQuery = commands[1];
         spotify
@@ -35,8 +41,16 @@ switch (commands[0]) {
                 console.log(err);
             });
         break;
-    case 'concert-this':
-        console.log(commands[1], '');
+    case 'concert-this': //Problem: TypeError: Cannot read property 'createElement' of undefined
+        console.log(commands[1]);
+        artistName = commands[1];
+        Events.getEvents(function(events) {
+            for (var i = 0; i < events.length; i++) {
+                console.log(events[i].venue.city + ", " + events[i].venue.region);
+            }
+        }, function(errors) {
+            console.log(errors);
+        });
         break;
     case 'movie-this':
         console.log(commands[1], '');

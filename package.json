@@ -5,6 +5,7 @@
   "main": "keys.js",
   "dependencies": {
     "axios": "^0.19.2",
+    "bandsintown-events": "^1.0.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "install": "^0.13.0",
@@ -13,7 +14,8 @@
     "node": "^13.10.1",
     "node-spotify-api": "^1.1.1",
     "nodenpm": "^0.1.6",
-    "spotify": "^0.3.0"
+    "spotify": "^0.3.0",
+    "xhr2": "^0.2.0"
   },
   "devDependencies": {},
   "scripts": {
