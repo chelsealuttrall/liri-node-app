@@ -14,6 +14,7 @@
     "node": "^13.10.1",
     "node-spotify-api": "^1.1.1",
     "nodenpm": "^0.1.6",
+    "reqwest": "^2.0.5",
     "spotify": "^0.3.0",
     "xhr2": "^0.2.0"
   },
