@@ -31,68 +31,74 @@ function iSaidDoIt() {
         if (error) {
             return console.log(error);
         }
-        console.log(data);
-        //I'm missing something that runs it after I print it. But I need to move on. 
+        console.log("DATA", data);
+        let processArgv = data.split(" ")
+        commands = processArgv.slice(2)
+        console.log("COMMANDS", commands)
+            //I'm missing something that runs it after I print it. But I need to move on. 
+        doCommand(commands);
     })
 };
 
+doCommand(commands);
 
-//different commands
-switch (commands[0]) {
-    case 'spotify-this-song': //this one isn't working quite right either.
-        console.log(commands[1]);
-        songQuery = commands[1];
-        spotify
-            .search({ type: 'track', query: songQuery, limit: 1 })
-            .then(function(response) {
-                console.log(response.tracks.items[0].artists[0]);
+function doCommand(commands) {
+    //different commands
+    switch (commands[0]) {
+        case 'spotify-this-song': //this one isn't working quite right either.
+            console.log(commands.slice(1).join(" "));
+            songQuery = commands.slice(1).join(" ");
+            spotify
+                .search({ type: 'track', query: songQuery, limit: 1 })
+                .then(function(response) {
+                    console.log(response.tracks.items[0].artists[0]);
 
-            })
-            .catch(function(err) {
-                console.log(err);
-            });
-        break;
-    case 'concert-this':
-        console.log("Liri is searching for the next concert")
-        console.log(commands[1]);
-        artistName = commands[1];
-        var queryURL = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=" + keys.bandsInTown.app_ID;
-        console.log(queryURL + "\r\n");
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+            break;
+        case 'concert-this':
+            console.log("Liri is searching for the next concert")
+            console.log(commands[1]);
+            artistName = commands.slice(1).join(" ");
+            var queryURL = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=" + keys.bandsInTown.app_ID;
+            console.log(queryURL + "\r\n");
 
-        axios.get(queryURL).then(
-            function(response) {
-                console.log("Venue: " + response.data[0].venue.name + "\r\n");
-                console.log("City: " + response.data[0].venue.city + "\r\n");
-                console.log(moment(response.data[0].datetime).format("MM/DD/YYYY") + "\r\n");
-            }
-        );
-        break;
-    case 'movie-this':
-        console.log("Liri is searching for info on that movie.")
-        console.log(commands[1]);
-        movieName = commands[1];
-        var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + keys.OMDb.key;
-        console.log(queryURL + "\r\n");
+            axios.get(queryURL).then(
+                function(response) {
+                    console.log("Venue: " + response.data[0].venue.name + "\r\n");
+                    console.log("City: " + response.data[0].venue.city + "\r\n");
+                    console.log(moment(response.data[0].datetime).format("MM/DD/YYYY") + "\r\n");
+                }
+            );
+            break;
+        case 'movie-this':
+            console.log("Liri is searching for info on that movie.")
+            console.log(commands[1]);
+            movieName = commands.slice(1).join(" ");
+            var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + keys.OMDb.key;
+            console.log(queryURL + "\r\n");
 
-        axios.get(queryURL).then(
-            function(response) {
-                console.log("Title: " + response.data.Title);
-                console.log("Year: " + response.data.Year);
-                console.log("Rated: " + response.data.imdbRating);
-                console.log("Plot: " + response.data.Plot);
-                console.log("Actors: " + response.data.Actors);
-                console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
-            }
-        );
-        break;
-    case 'do-what-it-says':
-        iSaidDoIt();
-        break;
+            axios.get(queryURL).then(
+                function(response) {
+                    console.log("Title: " + response.data.Title);
+                    console.log("Year: " + response.data.Year);
+                    console.log("Rated: " + response.data.imdbRating);
+                    console.log("Plot: " + response.data.Plot);
+                    console.log("Actors: " + response.data.Actors);
+                    console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+                }
+            );
+            break;
+        case 'do-what-it-says':
+            iSaidDoIt();
+            break;
 
-    default:
-        console.log('Sorry, I don\'t know how to do that.')
-};
-
+        default:
+            console.log('Sorry, I don\'t know how to do that.')
+    };
+}
 
 
 
