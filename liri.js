@@ -3,6 +3,8 @@ const moment = require('moment');
 const axios = require('axios').default;
 const keys = require("./keys.js");
 
+const fs = require('fs');
+
 //spotify stuff
 const Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
@@ -23,6 +25,16 @@ var movieName = '';
 var commands = process.argv.slice(2);
 
 //do what it says stuff
+function iSaidDoIt() {
+
+    fs.readFile("./random.txt", "utf8", function(error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        console.log(data);
+        //I'm missing something that runs it after I print it. But I need to move on. 
+    })
+};
 
 
 //different commands
@@ -73,10 +85,10 @@ switch (commands[0]) {
             }
         );
         break;
-
-
     case 'do-what-it-says':
-        console.log(commands[1]);
+        iSaidDoIt();
+        break;
+
     default:
         console.log('Sorry, I don\'t know how to do that.')
 };
