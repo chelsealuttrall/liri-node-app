@@ -11,3 +11,7 @@ exports.spotify = {
 exports.bandsInTown = {
     app_ID: process.env.app_ID
 };
+
+exports.OMDb = {
+    key: process.env.Key
+};

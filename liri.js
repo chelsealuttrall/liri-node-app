@@ -1,26 +1,26 @@
 require("dotenv").config();
-
-
-
+const moment = require('moment');
 const axios = require('axios').default;
-
-var keys = require("./keys.js");
+const keys = require("./keys.js");
 
 //spotify stuff
-var Spotify = require('node-spotify-api');
+const Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 let songQuery = '';
 var commands = process.argv.slice(2);
-console.log('commands:', commands);
+// console.log('commands:', commands);
+
 //concert this stuff
-var BandsInTownEvents = require('bandsintown-events')
-var Events = new BandsInTownEvents();
+//const BandsInTownEvents = require('bandsintown-events')
+//var Events = new BandsInTownEvents();
 
 var artistName = '';
 var commands = process.argv.slice(2);
 
-//movie this stuff
 
+//movie this stuff
+var movieName = '';
+var commands = process.argv.slice(2);
 
 //do what it says stuff
 
@@ -41,25 +41,42 @@ switch (commands[0]) {
             });
         break;
     case 'concert-this':
+        console.log("Liri is searching for the next concert")
         console.log(commands[1]);
         artistName = commands[1];
-        Events.setParams({
-            "app_id": keys.bandsInTown.app_ID,
-            "artists": [artistName]
-        });
-        Events.getEvents(function(events) {
-            for (var i = 0; i < events.length; i++) {
-                console.log(events[i].venue.city + ", " + events[i].venue.region);
-                // console.log(JSON.stringify(events, null, 2))
+        var queryURL = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=" + keys.bandsInTown.app_ID;
+        console.log(queryURL + "\r\n");
+
+        axios.get(queryURL).then(
+            function(response) {
+                console.log("Venue: " + response.data[0].venue.name + "\r\n");
+                console.log("City: " + response.data[0].venue.city + "\r\n");
+                console.log(moment(response.data[0].datetime).format("MM/DD/YYYY") + "\r\n");
             }
-        }, function(errors) {
-            console.log(errors);
-        });
+        );
         break;
     case 'movie-this':
-        console.log(commands[1], '');
+        console.log("Liri is searching for info on that movie.")
+        console.log(commands[1]);
+        movieName = commands[1];
+        var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + keys.OMDb.key;
+        console.log(queryURL + "\r\n");
+
+        axios.get(queryURL).then(
+            function(response) {
+                console.log("Title: " + response.data.Title);
+                console.log("Year: " + response.data.Year);
+                console.log("Rated: " + response.data.imdbRating);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
+                console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+            }
+        );
+        break;
+
+
     case 'do-what-it-says':
-        console.log(commands[1], '');
+        console.log(commands[1]);
     default:
         console.log('Sorry, I don\'t know how to do that.')
 };
